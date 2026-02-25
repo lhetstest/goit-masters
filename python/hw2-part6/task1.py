@@ -49,7 +49,7 @@ print(f"Загальна сума заробітної плати: {total}, Се
 '''
 
 
-def total_salary(path):
+def total_salary(path: str) -> tuple[float, float]:
     try:
         with open(path, 'r', encoding='utf-8') as file:
             total = 0
