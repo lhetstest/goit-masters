@@ -52,15 +52,27 @@ print("Список привітань на цьому тижні:", upcoming_bi
 Цей список містить інформацію про те, кого і коли потрібно привітати з днем народження.
 '''
 
-
 from datetime import datetime, timedelta
 from typing import List, Dict
+
+
+def is_leap_year(year: int) -> bool:
+    """
+    Перевіряє, чи є рік високосним.
+
+    Args:
+        year (int): Рік для перевірки.
+    Returns:
+        bool: True, якщо рік високосний, інакше False.
+    """
+    return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
 
 
 def get_upcoming_birthdays(users: List[Dict[str, str]]) -> List[Dict[str, str]]:
     """
     Визначає користувачів, у яких день народження протягом найближчих 7 днів включно.
     Якщо день народження припадає на вихідний, дата привітання переноситься на наступний понеділок.
+    Якщо день народження припадає на 29 лютого, але поточний рік не є високосним, обробляємо можливу помилку, пропускаючи цей випадок
 
     Args:
         users (List[Dict[str, str]]): Список словників з ключами "name" та "birthday" у форматі 'рік.місяць.дата'.
@@ -73,10 +85,24 @@ def get_upcoming_birthdays(users: List[Dict[str, str]]) -> List[Dict[str, str]]:
 
     for user in users:
         birthday = datetime.strptime(user["birthday"], "%Y.%m.%d").date()
-        birthday_this_year = birthday.replace(year=today.year)
+
+        if birthday.month == 2 and birthday.day == 29:
+            if is_leap_year(today.year):
+                birthday_this_year = birthday.replace(year=today.year)
+            else:
+                continue  # Пропускаємо цей випадок, якщо поточний рік не є високосним
+        else:
+            birthday_this_year = birthday.replace(year=today.year)
 
         if birthday_this_year < today:
-            birthday_this_year = birthday_this_year.replace(year=today.year + 1)
+            next_year = today.year + 1
+            if birthday.month == 2 and birthday.day == 29:
+                if is_leap_year(next_year):
+                    birthday_this_year = birthday.replace(year=next_year)
+                else:
+                    continue  # Пропускаємо цей випадок, якщо наступний рік не є високосним
+            else:
+                birthday_this_year = birthday.replace(year=next_year)
 
         days_until_birthday = (birthday_this_year - today).days
 
@@ -96,7 +122,9 @@ def get_upcoming_birthdays(users: List[Dict[str, str]]) -> List[Dict[str, str]]:
 if __name__ == "__main__":
     users = [
         {"name": "John Doe", "birthday": "1985.02.23"},
-        {"name": "Jane Smith", "birthday": "1990.03.02"}
+        {"name": "Jane Smith", "birthday": "1990.03.02"},
+        {"name": "Alice Johnson", "birthday": "1992.02.29"},  # Високосний рік
+        {"name": "Bob Brown", "birthday": "1988.02.28"},
     ]
     upcoming_birthdays = get_upcoming_birthdays(users)
     print("Список привітань на цьому тижні:", upcoming_birthdays)
