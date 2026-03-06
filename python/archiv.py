@@ -1,3 +1,3 @@
 import shutil
 
-shutil.make_archive('theme6', 'zip', root_dir='./hw2-part6')
+shutil.make_archive('theme8', 'zip', root_dir='./hw3-theme8')
