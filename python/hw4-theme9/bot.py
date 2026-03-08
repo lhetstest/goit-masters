@@ -64,7 +64,7 @@ class Phone(Field):
     def __init__(self, value: str):
         value = value.strip()
         if not re.fullmatch(r"\d{12}", value):
-            raise ValueError("Phone must be exactly 10 digits.")
+            raise ValueError("Phone must be exactly 12 digits.")
         super().__init__(value)
 
 
