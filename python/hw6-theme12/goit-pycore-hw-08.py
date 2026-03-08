@@ -75,11 +75,29 @@ class Phone(Field):
 
 class Birthday(Field):
     def __init__(self, value: str):
+        value = value.strip()
         try:
-            date_obj = datetime.strptime(value.strip(), "%d.%m.%Y")
+            # Парсимо дату без року, щоб отримати день і місяць
+            day, month, year = map(int, value.split('.'))
+        except Exception:
+            raise ValueError("Невірний формат дати, використовуйте DD.MM.YYYY")
+
+        # Перевірка для 29 лютого
+        if month == 2 and day == 29:
+            if not self.is_leap_year(year):
+                raise ValueError("29 лютого можливий лише у високосному році")
+
+        try:
+            date_obj = datetime.strptime(value, "%d.%m.%Y")
         except ValueError:
             raise ValueError("Невірний формат дати, використовуйте DD.MM.YYYY")
+
         super().__init__(date_obj)
+
+    @staticmethod
+    def is_leap_year(year: int) -> bool:
+        return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+
 
     def __str__(self) -> str:
         return self.value.strftime("%d.%m.%Y")

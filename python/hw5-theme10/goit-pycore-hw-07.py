@@ -74,11 +74,29 @@ class Phone(Field):
 
 class Birthday(Field):
     def __init__(self, value: str):
+        value = value.strip()
         try:
-            date_obj = datetime.strptime(value.strip(), "%d.%m.%Y")
+            # Парсимо дату без року, щоб отримати день і місяць
+            day, month, year = map(int, value.split('.'))
+        except Exception:
+            raise ValueError("Невірний формат дати, використовуйте DD.MM.YYYY")
+
+        # Перевірка для 29 лютого
+        if month == 2 and day == 29:
+            if not self.is_leap_year(year):
+                raise ValueError("29 лютого можливий лише у високосному році")
+
+        try:
+            date_obj = datetime.strptime(value, "%d.%m.%Y")
         except ValueError:
             raise ValueError("Невірний формат дати, використовуйте DD.MM.YYYY")
+
         super().__init__(date_obj)
+
+    @staticmethod
+    def is_leap_year(year: int) -> bool:
+        return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+
 
     def __str__(self) -> str:
         return self.value.strftime("%d.%m.%Y")
@@ -125,9 +143,31 @@ class Record:
             return None
         today = datetime.now().date()
         bday = self.birthday.value.date()
-        next_birthday = bday.replace(year=today.year)
+        year = today.year
+
+        # If birthday is Feb 29 and current year is not leap, skip greeting this year
+        if bday.month == 2 and bday.day == 29:
+            if not (year % 400 == 0 or (year % 4 == 0 and year % 100 != 0)):
+                # Find next leap year
+                next_year = year + 1
+                while not (next_year % 400 == 0 or (next_year % 4 == 0 and next_year % 100 != 0)):
+                    next_year += 1
+                next_birthday = bday.replace(year=next_year)
+            else:
+                next_birthday = bday.replace(year=year)
+        else:
+            next_birthday = bday.replace(year=year)
+
         if next_birthday < today:
-            next_birthday = bday.replace(year=today.year + 1)
+            # Move to next year or next leap year for Feb 29
+            if bday.month == 2 and bday.day == 29:
+                next_year = year + 1
+                while not (next_year % 400 == 0 or (next_year % 4 == 0 and next_year % 100 != 0)):
+                    next_year += 1
+                next_birthday = bday.replace(year=next_year)
+            else:
+                next_birthday = bday.replace(year=year + 1)
+
         return (next_birthday - today).days
 
     def __str__(self) -> str:
