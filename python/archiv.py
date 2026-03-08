@@ -1,3 +1,3 @@
 import shutil
 
-shutil.make_archive('theme9', 'zip', root_dir='./hw4-theme9')
+shutil.make_archive('goit-pycore-hw-07', 'zip', root_dir='./hw5-theme10')
