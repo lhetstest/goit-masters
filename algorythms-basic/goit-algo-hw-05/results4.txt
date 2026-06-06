@@ -1,0 +1,50 @@
+Article 1 (length = 12658)
+  Pattern 1 (existing): 
+  Pattern: "структури даних"
+  Boyer-Moore: 23.0899 µs
+  Knuth-Morris-Pratt: 63.6442 µs
+  Rabin-Karp: 123.4640 µs
+  → Fastest: Boyer-Moore
+
+  Pattern 2 (fake): 
+  Pattern: "Кувала зозуля"
+  Boyer-Moore: 365.5879 µs
+  Knuth-Morris-Pratt: 1313.1087 µs
+  Rabin-Karp: 3024.6835 µs
+  → Fastest: Boyer-Moore
+
+  ★ Fastest algorithm for Article 1: Boyer-Moore
+
+───────────────────────────────────────────────────────
+
+Article 2 (length = 17590)
+  Pattern 1 (existing): 
+  Pattern: "аргументи функції"
+  Boyer-Moore: 225.0088 µs
+  Knuth-Morris-Pratt: 1055.4410 µs
+  Rabin-Karp: 2207.7925 µs
+  → Fastest: Boyer-Moore
+
+  Pattern 2 (fake): 
+  Pattern: "Кувала зозуля"
+  Boyer-Moore: 501.2685 µs
+  Knuth-Morris-Pratt: 1873.4295 µs
+  Rabin-Karp: 4683.2500 µs
+  → Fastest: Boyer-Moore
+
+  ★ Fastest algorithm for Article 2: Boyer-Moore
+
+───────────────────────────────────────────────────────
+
+═══════════════════════════════════════════════════════
+OVERALL SUMMARY
+═══════════════════════════════════════════════════════
+
+Cumulative average time across all tests:
+  Boyer-Moore               1114.9550 µs
+  Knuth-Morris-Pratt        4305.6233 µs
+  Rabin-Karp                10039.1899 µs
+
+★ BEST OVERALL ALGORITHM: Boyer-Moore
+
+───────────────────────────────────────────────────────

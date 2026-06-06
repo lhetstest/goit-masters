@@ -1,0 +1,75 @@
+Article 1 (length = 12658)
+  Pattern 1 (existing)
+  Pattern: "структури даних"
+  Boyer-Moore: 16.5772 µs
+  Knuth-Morris-Pratt: 59.2471 µs
+  Rabin-Karp: 139.5598 µs
+  → Fastest: Boyer-Moore
+
+  Pattern 2 (fake)
+  Pattern: "Кувала зозуля"
+  Boyer-Moore: 360.9998 µs
+  Knuth-Morris-Pratt: 1325.1423 µs
+  Rabin-Karp: 3047.7364 µs
+  → Fastest: Boyer-Moore
+
+  ★ Fastest algorithm for Article 1: Boyer-Moore
+
+───────────────────────────────────────────────────────
+
+Article 2 (length = 17590)
+  Pattern 1 (existing)
+  Pattern: "аргументи функції"
+  Boyer-Moore: 231.4002 µs
+  Knuth-Morris-Pratt: 1064.6107 µs
+  Rabin-Karp: 2240.7657 µs
+  → Fastest: Boyer-Moore
+
+  Pattern 2 (fake)
+  Pattern: "Кувала зозуля"
+  Boyer-Moore: 532.2425 µs
+  Knuth-Morris-Pratt: 1941.0850 µs
+  Rabin-Karp: 4368.9280 µs
+  → Fastest: Boyer-Moore
+
+  ★ Fastest algorithm for Article 2: Boyer-Moore
+
+───────────────────────────────────────────────────────
+
+═══════════════════════════════════════════════════════
+OVERALL SUMMARY
+═══════════════════════════════════════════════════════
+
+Cumulative average time across all tests:
+  Boyer-Moore               1141.2198 µs
+  Knuth-Morris-Pratt        4390.0851 µs
+  Rabin-Karp                9796.9900 µs
+
+★ BEST OVERALL ALGORITHM: Boyer-Moore
+
+───────────────────────────────────────────────────────
+CONCLUSIONS
+───────────────────────────────────────────────────────
+
+Boyer-Moore:
+  Performs best on long patterns with a large alphabet (e.g. English/Ukrainian
+  text). The bad-character heuristic lets it skip large portions of the text,
+  making it sub-linear on average. It tends to be the fastest for real-world
+  text search when the pattern is not trivially short.
+
+Knuth-Morris-Pratt (KMP):
+  Guarantees O(n + m) worst-case time regardless of the pattern or alphabet.
+  The failure function avoids re-examining characters, so it is consistent and
+  predictable. On short or repetitive patterns it can outperform Boyer-Moore.
+  Good choice when worst-case guarantees matter more than average speed.
+
+Rabin-Karp:
+  Uses rolling hashing; good when searching for multiple patterns simultaneously.
+  For a single pattern it is usually the slowest of the three because of the
+  hashing overhead and potential hash collisions requiring character-by-character
+  verification. Suitable for plagiarism detection / multi-pattern problems.
+
+★ RECOMMENDATION: 'Boyer-Moore' showed the lowest total execution time
+  across both articles and both pattern types in this benchmark.
+  For general Ukrainian/English text search, Boyer-Moore is typically the
+  fastest practical choice due to its large-skip heuristic.

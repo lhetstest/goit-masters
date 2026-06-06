@@ -2,4 +2,5 @@
 python/.DS_Store
 hw2-part6/venv/*
 math/.venv/*
-./venv/*
+algorythms-basic/.venv/*
+.vscode/*
