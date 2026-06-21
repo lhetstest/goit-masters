@@ -1,3 +1,3 @@
 import shutil
 
-shutil.make_archive('hw-04-RulYuliia', 'zip', root_dir='./goit-algo-hw-04')
+shutil.make_archive('hw-08-RulYuliia', 'zip', root_dir='./goit-algo-hw-08')

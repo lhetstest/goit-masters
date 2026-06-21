@@ -4,3 +4,4 @@ hw2-part6/venv/*
 math/.venv/*
 algorythms-basic/.venv/*
 .vscode/*
+algorythms-basic/archive.py
