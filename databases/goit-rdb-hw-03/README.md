@@ -38,9 +38,9 @@ select distinct category_id, priсe from products order by 2 desc limit 10;
 select distinct category_id, sum(price) from products group by 1 order by 2 desc limit 8;
 ```
 
-![Task 1 option 1](./img/task3.jpg)
+![Task 3 option 1](./img/task3.jpg)
 
-![Task 1 option 2](./img/task3-v2.jpg)
+![Task 3 option 2](./img/task3-v2.jpg)
 
 ## Task 4
 
