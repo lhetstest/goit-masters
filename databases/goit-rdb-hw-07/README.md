@@ -69,4 +69,4 @@ SELECT
 FROM orders;
 ```
 
-![task5-1](./img/task5.jpg)
+![task5](./img/task5.jpg)
